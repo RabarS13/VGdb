@@ -64,7 +64,26 @@
         <section class="mb-4">
           <h2 class="mb-3 text-white">Featured Reviews</h2>
           
-         
+         <input type="text" id="searchBox" placeholder="Search games..." />
+<button onclick="searchGame()">Search</button>
+<div id="results"></div>
+
+
+          <div id="authArea"></div>
+<script>
+  if (localStorage.getItem('token')) {
+    document.getElementById('authArea').innerHTML = '<button onclick="logout()">Logout</button>';
+  } else {
+    document.getElementById('authArea').innerHTML = '<a href="/login.html">Login</a>';
+  }
+
+  function logout() {
+    localStorage.removeItem('token');
+    location.reload();
+  }
+</script>
+
+          
           <div class="row row-cols-1 row-cols-md-4 g-4">
          
             <div class="col">
