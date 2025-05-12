@@ -20,6 +20,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'front.html'));
 });
+const authRoutes = require('./routes/authRoutes');
+app.use('/auth', authRoutes);
 
 // API Routes
 app.use('/api/games', gameRoutes);
