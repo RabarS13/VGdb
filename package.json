@@ -1,24 +1,17 @@
 {
   "name": "gameverse",
   "version": "1.0.0",
-  "description": "Full-stack game app with MongoDB and RAWG API",
+  "description": "Full-stack game app with MongoDB, RAWG API, and user accounts",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
- HEAD
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongodb": "^4.17.2",
-    "mongoose": "^8.14.2"
-
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mongoose": "^7.0.4"
-2720734ede94c012a01251c2f253ddd77141d872
+    "mongoose": "^7.0.4",
+    "bcrypt": "^5.1.0",
+    "jsonwebtoken": "^9.0.0"
   }
 }
