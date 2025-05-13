@@ -120,6 +120,7 @@
               <p class="card-text">Released: ${game.releaseDate}</p>
               <p class="card-text">Genres: ${game.genre.join(', ')}</p>
               <a href="https://rawg.io/games/${game.gameId}" target="_blank" class="btn btn-dark btn-sm">View on RAWG</a>
+              <button class="btn btn-danger btn-sm mt-2" onclick="removeFavorite('${game.gameId}')">Remove</button>
             </div>
           </div>`;
         resultsDiv.appendChild(div);
