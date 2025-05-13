@@ -23,7 +23,7 @@ router.get('/favorites', auth, async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch favorites' });
   }
-}
+});
           // DELETE favorite game by ID
 router.delete('/favorite/:gameId', auth, async (req, res) => {
   try {
