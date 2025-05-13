@@ -5,53 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GameVerse</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body class="bg-dark text-white">
-
 <div class="container-fluid">
   <div class="row min-vh-100 flex-nowrap">
-    <!-- Sidebar -->
     <div class="col-auto col-md-3 col-xl-2 px-0 bg-dark d-flex flex-column">
       <a href="/" class="text-decoration-none text-white d-flex align-items-center p-3 mb-3 border-bottom">
         <span class="fs-5 fw-bold">GameVerse</span>
       </a>
-
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
           <a href="index.html" class="nav-link text-white active">Home</a>
         </li>
-        <li class="nav-item">
-          <a href="front2.html" class="nav-link text-white">Old Home</a>
-        </li>
-        <li>
-          <a href="news.html" class="nav-link text-white">News</a>
-        </li>
-        <li>
-          <a href="about.html" class="nav-link text-white">About</a>
-        </li>
+        <li><a href="news.html" class="nav-link text-white">News</a></li>
+        <li><a href="about.html" class="nav-link text-white">About</a></li>
+        <li><a href="/login.html" class="nav-link text-white">Login</a></li>
+        <li><a href="/register.html" class="nav-link text-white">Register</a></li>
+        <li><a href="#" class="nav-link text-white" onclick="loadFavorites()">My Favorites</a></li>
       </ul>
-
       <hr class="text-white">
-
-      <!-- Search and Login in Sidebar -->
       <div class="px-3">
         <input type="text" id="searchBox" class="form-control form-control-sm mb-2" placeholder="Search games..." />
         <button class="btn btn-sm btn-primary w-100 mb-2" onclick="searchGame()">Search</button>
         <div id="authArea"></div>
       </div>
-
-      <div class="mt-auto text-center pb-3"></div>
     </div>
-
-    <!-- Main Content -->
     <div class="col py-3">
       <header class="mb-4">
         <div class="p-5 text-white rounded">
           <h1>GameVerse: Explore & Save Your Favorite Games</h1>
         </div>
       </header>
-
       <section class="mb-4">
         <div id="results" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
       </section>
@@ -60,12 +44,9 @@
 </div>
 
 <script>
-  // Show login/logout based on token
   const authDiv = document.getElementById('authArea');
   if (localStorage.getItem('token')) {
     authDiv.innerHTML = '<button class="btn btn-sm btn-danger w-100" onclick="logout()">Logout</button>';
-  } else {
-    authDiv.innerHTML = '<a href="/login.html" class="btn btn-sm btn-outline-light w-100">Login</a>';
   }
 
   function logout() {
@@ -79,7 +60,6 @@
     const data = await response.json();
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = '';
-
     data.results.forEach(game => {
       const div = document.createElement('div');
       div.classList.add('col');
@@ -92,19 +72,14 @@
             <a href="https://rawg.io/games/${game.slug}" class="btn btn-outline-light btn-sm" target="_blank">View on RAWG</a>
             <button class="btn btn-primary btn-sm mt-2" onclick='addToFavorites(${JSON.stringify(game)})'>Add to Favorites</button>
           </div>
-        </div>
-      `;
+        </div>`;
       resultsDiv.appendChild(div);
     });
   }
 
   async function addToFavorites(game) {
     const token = localStorage.getItem('token');
-    if (!token) {
-      alert("Please log in first!");
-      return;
-    }
-
+    if (!token) return alert("Please log in first!");
     const payload = {
       gameId: game.id,
       title: game.name,
@@ -112,7 +87,6 @@
       releaseDate: game.released,
       genre: game.genres.map(g => g.name)
     };
-
     const res = await fetch('/api/games/favorite', {
       method: 'POST',
       headers: {
@@ -121,9 +95,38 @@
       },
       body: JSON.stringify(payload)
     });
-
     const result = await res.json();
     alert(result.message || result.error);
+  }
+
+  async function loadFavorites() {
+    const token = localStorage.getItem('token');
+    if (!token) return alert("Please log in first!");
+    const res = await fetch('/api/games/favorites', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const games = await res.json();
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '';
+    if (Array.isArray(games) && games.length > 0) {
+      games.forEach(game => {
+        const div = document.createElement('div');
+        div.classList.add('col');
+        div.innerHTML = `
+          <div class="card bg-info text-dark h-100">
+            <img src="${game.cover}" class="card-img-top" alt="${game.title}" />
+            <div class="card-body">
+              <h5 class="card-title">${game.title}</h5>
+              <p class="card-text">Released: ${game.releaseDate}</p>
+              <p class="card-text">Genres: ${game.genre.join(', ')}</p>
+              <a href="https://rawg.io/games/${game.gameId}" target="_blank" class="btn btn-dark btn-sm">View on RAWG</a>
+            </div>
+          </div>`;
+        resultsDiv.appendChild(div);
+      });
+    } else {
+      resultsDiv.innerHTML = '<p>No favorite games saved.</p>';
+    }
   }
 </script>
 </body>
