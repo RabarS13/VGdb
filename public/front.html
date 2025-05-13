@@ -98,6 +98,19 @@
     const result = await res.json();
     alert(result.message || result.error);
   }
+async function removeFavorite(gameId) {
+  const token = localStorage.getItem('token');
+  if (!token) return alert("Please log in first!");
+
+  const res = await fetch(`/api/games/favorite/${gameId}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+
+  const result = await res.json();
+  alert(result.message || result.error);
+  loadFavorites(); // refresh favorites list
+}
 
   async function loadFavorites() {
     const token = localStorage.getItem('token');
