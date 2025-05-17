@@ -40,7 +40,6 @@
       </div>
     </div>
     <div class="col py-3">
-    <div class="col py-3">
       <header class="mb-4">
         <h1 class="text-white" id="sectionTitle">📰 Latest Gaming News</h1>
       </header>
@@ -145,6 +144,7 @@
               <p class="card-text">Released: ${game.releaseDate}</p>
               <p class="card-text">Genres: ${game.genre.join(', ')}</p>
               <a href="https://rawg.io/games/${game.gameId}" target="_blank" class="btn btn-dark btn-sm">View on RAWG</a>
+              <button class="btn btn-danger btn-sm mt-2" onclick="removeFavorite('${game.gameId}')">Remove</button>
             </div>
           </div>
         `;
@@ -181,6 +181,25 @@
 
     const result = await res.json();
     alert(result.message || result.error);
+  }
+
+  async function removeFavorite(gameId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("Please log in first!");
+      return;
+    }
+
+    const res = await fetch(`/api/games/favorite/${gameId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    });
+
+    const result = await res.json();
+    alert(result.message || result.error);
+    loadFavorites();
   }
 
   loadGamingNews();
