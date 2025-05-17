@@ -15,44 +15,30 @@
 <body class="bg-dark"></body>
 
 
-  <div class="container-fluid">
-    <div class="row min-vh-100 flex-nowrap">
-      
-      
-      <div class="col-auto col-md-3 col-xl-2 px-0 bg-dark d-flex flex-column">
-        <a href="/" class="text-decoration-none text-white d-flex align-items-center p-3 mb-3 border-bottom">
-          <span class="fs-5 fw-bold">Content</span>
-        </a>
-        
-        <ul class="nav nav-pills flex-column mb-auto">
-          <li class="nav-item">
-            <a href="index.html" class="nav-link text-white active">
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="news.html" class="nav-link text-white">
-             
-              News
-            </a>
-          </li>
-          <li>
-            <a href="about.html" class="nav-link text-white ">
-            
-              About
-            </a>
-          </li>
-        </ul>
-        
-        <div class="mt-auto text-center pb-3">
-        
-        </div>
+ <div class="container-fluid">
+  <div class="row min-vh-100 flex-nowrap">
+    <div class="col-auto col-md-3 col-xl-2 px-0 bg-dark d-flex flex-column">
+      <a href="/" class="text-decoration-none text-white d-flex align-items-center p-3 mb-3 border-bottom">
+        <span class="fs-5 fw-bold">GameVerse</span>
+      </a>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item"><a href="front.html" class="nav-link text-white">Home</a></li>
+		<li class="nav-item"><a href="front2.html" class="nav-link text-white active">Old Home</a></li>
+        <li><a href="news.html" class="nav-link text-white">News</a></li>
+        <li><a href="about.html" class="nav-link text-white">About</a></li>
+        <li><a href="/login.html" class="nav-link text-white">Login</a></li>
+        <li><a href="/register.html" class="nav-link text-white">Register</a></li>
+        <li><a href="#" class="nav-link text-white" onclick="loadFavorites()">My Favorites</a></li>
+      </ul>
+      <hr class="text-white">
+      <div class="px-3">
+        <input type="text" id="searchBox" class="form-control form-control-sm mb-2" placeholder="Search games..." />
+        <button class="btn btn-sm btn-primary w-100 mb-2" onclick="searchGame()">Search</button>
+        <button id="backToNews" class="btn btn-sm btn-outline-light w-100 mb-2" onclick="loadGamingNews()">← Back to News</button>
+        <div id="authArea"></div>
       </div>
-      
-  
-      <div class="col py-3">
-        
-
+    </div>
+    <div class="col py-3">
         <header class="mb-4">
           <div class="p-5 text-white rounded">
             <h1>Video Games webpage project</h1>
